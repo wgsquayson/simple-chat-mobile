@@ -94,11 +94,10 @@ export default function ({ onEnterChat }: TemplateProps) {
         fontSize: theme.fontSizes.xs,
       },
       divider: {
-        height: 1,
+        height: 2,
         width: "100%",
-        backgroundColor: "white",
+        backgroundColor: theme.colors.border.primary,
         marginVertical: theme.spacing.xs,
-        opacity: 0.4,
       },
     };
   });

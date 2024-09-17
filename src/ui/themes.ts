@@ -1,7 +1,8 @@
 export const defaultTheme = {
   colors: {
     background: {
-      primary: "#434343",
+      primary: "#121212",
+      secondary: "#FFFFFF",
     },
     text: {
       primary: "#FFFFFF",
@@ -24,6 +25,6 @@ export const defaultTheme = {
     lg: 32,
     xl: 40,
   },
-};
+} as const;
 
 export type Theme = typeof defaultTheme;

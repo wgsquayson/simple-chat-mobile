@@ -65,6 +65,7 @@ export default function ({ onEnterChat }: TemplateProps) {
       header: {
         flexDirection: "row",
         justifyContent: "space-between",
+        marginBottom: theme.spacing.sml,
       },
       pageTitle: {
         color: theme.colors.text.primary,
@@ -111,11 +112,10 @@ export default function ({ onEnterChat }: TemplateProps) {
             <Entypo
               name="plus"
               size={24}
-              color={styles.theme.colors.text.primary}
+              color={styles.theme.colors.icon.primary}
             />
           </TouchableOpacity>
         </View>
-        <View style={{ height: styles.theme.spacing.sml }} />
       </>
       <FlatList
         ItemSeparatorComponent={() => (

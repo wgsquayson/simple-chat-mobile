@@ -8,6 +8,7 @@ import {
 import { Layout } from "../../ui/components";
 import { useStyle } from "../../ui/hooks";
 import Entypo from "@expo/vector-icons/Entypo";
+import { TemplateProps } from "./model";
 
 type Chat = {
   id: string;
@@ -53,7 +54,7 @@ const chats: Chat[] = [
   },
 ];
 
-export default function () {
+export default function ({ onEnterChat }: TemplateProps) {
   const styles = useStyle((theme) => {
     const lastMessage: TextStyle = {
       color: theme.colors.text.primary,
@@ -136,7 +137,10 @@ export default function () {
             !item.lastMessage.sentByMe && !item.lastMessage.read;
 
           return (
-            <TouchableOpacity style={styles.chat}>
+            <TouchableOpacity
+              style={styles.chat}
+              onPress={() => onEnterChat(item.id)}
+            >
               <View style={styles.chatInfo}>
                 <Text style={styles.recipientName}>{item.recipient}</Text>
 

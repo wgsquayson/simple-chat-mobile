@@ -19,7 +19,7 @@ export default function Layout({ children }: PropsWithChildren) {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-      <SafeAreaView>{children}</SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>{children}</SafeAreaView>
     </KeyboardAvoidingView>
   );
 }

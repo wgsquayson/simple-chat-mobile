@@ -103,22 +103,21 @@ export default function () {
 
   return (
     <Layout>
+      <>
+        <View style={styles.header}>
+          <Text style={styles.pageTitle}>SimpleChat</Text>
+          <TouchableOpacity>
+            <Entypo
+              name="plus"
+              size={24}
+              color={styles.theme.colors.text.primary}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={{ height: styles.theme.spacing.sml }} />
+      </>
       <FlatList
-        ListHeaderComponent={
-          <>
-            <View style={styles.header}>
-              <Text style={styles.pageTitle}>SimpleChat</Text>
-              <TouchableOpacity>
-                <Entypo
-                  name="plus"
-                  size={24}
-                  color={styles.theme.colors.text.primary}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={{ height: styles.theme.spacing.md }} />
-          </>
-        }
+        contentContainerStyle={styles.flatlist}
         ItemSeparatorComponent={() => (
           <>
             <View style={styles.divider} />

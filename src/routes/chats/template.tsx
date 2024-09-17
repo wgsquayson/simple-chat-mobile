@@ -117,7 +117,6 @@ export default function () {
         <View style={{ height: styles.theme.spacing.sml }} />
       </>
       <FlatList
-        contentContainerStyle={styles.flatlist}
         ItemSeparatorComponent={() => (
           <>
             <View style={styles.divider} />

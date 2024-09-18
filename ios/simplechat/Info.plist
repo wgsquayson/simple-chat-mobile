@@ -30,6 +30,12 @@
           <string>com.wgsquayson.simplechat</string>
         </array>
       </dict>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.googleusercontent.apps.16868091198-b68f1me5p5dv59054k45v5vj48646ka1</string>
+        </array>
+      </dict>
     </array>
     <key>CFBundleVersion</key>
     <string>1</string>

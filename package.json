@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
   "scripts": {
+    "prebuild": "npx expo prebuild --clean",
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-google-signin/google-signin": "^13.0.1",
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
     "expo": "~51.0.28",

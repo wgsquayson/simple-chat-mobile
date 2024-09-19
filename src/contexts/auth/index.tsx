@@ -11,33 +11,50 @@ import {
   isErrorWithCode,
   isSuccessResponse,
   statusCodes,
-  User as GoogleUser,
 } from "@react-native-google-signin/google-signin";
+import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
 
 const AuthContext = createContext<AuthContextValue>({
   signIn: () => new Promise(() => {}),
   signOut: () => new Promise(() => {}),
-  loading: false,
+  loading: true,
 });
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<User | undefined>();
-  const [loading, setLoading] = useState(false);
-
-  function updateUser(user: GoogleUser["user"]) {
-    setUser({
-      id: user.id,
-      email: user.email,
-      name: user.name,
-    });
-  }
+  const [loading, setLoading] = useState(true);
 
   async function signIn() {
     try {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
       if (isSuccessResponse(response) && response.data) {
-        updateUser(response.data.user);
+        const googleCredential = auth.GoogleAuthProvider.credential(
+          response.data.idToken
+        );
+
+        const { user } = await auth().signInWithCredential(googleCredential);
+
+        const userDoc = await firestore()
+          .collection("users")
+          .doc(user.uid)
+          .get();
+
+        if (!userDoc.exists) {
+          await firestore().collection("users").doc(user.uid).set({
+            id: user.uid,
+            name: user.displayName,
+            email: user.email,
+            createdAt: new Date(),
+          });
+        }
+
+        setUser({
+          id: user.uid,
+          name: user.displayName,
+          email: user.email ?? "",
+        });
       }
     } catch (error) {
       if (isErrorWithCode(error)) {
@@ -60,33 +77,26 @@ export function AuthProvider({ children }: PropsWithChildren) {
   async function signOut() {
     try {
       await GoogleSignin.signOut();
+      await auth().signOut();
       setUser(undefined);
     } catch (error) {}
   }
 
-  async function checkForSignedInUser() {
-    setLoading(true);
-
-    const hasPreviousSignIn = GoogleSignin.hasPreviousSignIn();
-    const response = GoogleSignin.getCurrentUser();
-
-    if (hasPreviousSignIn && response?.user) {
-      updateUser(response.user);
-      setLoading(false);
-      return;
+  function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
+    if (user) {
+      setUser({
+        id: user.uid,
+        email: user.email,
+        name: user.displayName,
+      });
     }
 
-    try {
-      const { data } = await GoogleSignin.signInSilently();
-      if (data) updateUser(data.user);
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
+    setLoading(false);
   }
 
   useEffect(() => {
-    checkForSignedInUser();
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return () => subscriber();
   }, []);
 
   return (

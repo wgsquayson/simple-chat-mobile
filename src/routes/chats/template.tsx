@@ -9,13 +9,14 @@ import { Button, Layout } from "../../ui/components";
 import { useStyle } from "../../ui/hooks";
 import Entypo from "@expo/vector-icons/Entypo";
 import { TemplateProps } from "./model";
+import { User } from "../../contexts/auth/model";
 
 type Chat = {
   id: string;
-  recipient: string;
+  recipient: User;
   lastMessage: {
     text: string;
-    date: string;
+    timestamp: string;
     read: boolean;
     sentByMe: boolean;
   };
@@ -24,9 +25,13 @@ type Chat = {
 const chats: Chat[] = [
   {
     id: "1",
-    recipient: "Mark",
+    recipient: {
+      id: "1",
+      email: "mark@email.com",
+      name: "Mark",
+    },
     lastMessage: {
-      date: "17/09 - 11:07",
+      timestamp: "17/09 - 11:07",
       text: "Hey, how you doing? I know we had our differences in the past but i would really like to",
       read: false,
       sentByMe: false,
@@ -34,9 +39,13 @@ const chats: Chat[] = [
   },
   {
     id: "2",
-    recipient: "Anna",
+    recipient: {
+      id: "2",
+      email: "anna@email.com",
+      name: "Anna",
+    },
     lastMessage: {
-      date: "15/09 - 11:10",
+      timestamp: "15/09 - 11:10",
       text: "No",
       read: true,
       sentByMe: true,
@@ -44,9 +53,13 @@ const chats: Chat[] = [
   },
   {
     id: "3",
-    recipient: "Joseph",
+    recipient: {
+      id: "3",
+      email: "joseph@email.com",
+      name: "Joseph",
+    },
     lastMessage: {
-      date: "10/09 - 11:07",
+      timestamp: "10/09 - 11:07",
       text: "Sure!",
       read: false,
       sentByMe: true,
@@ -147,7 +160,7 @@ export default function ({ onEnterChat, user, onSignOut }: TemplateProps) {
               onPress={() => onEnterChat(item.id)}
             >
               <View style={styles.chatInfo}>
-                <Text style={styles.recipientName}>{item.recipient}</Text>
+                <Text style={styles.recipientName}>{item.recipient.name}</Text>
 
                 <Text
                   style={
@@ -161,7 +174,7 @@ export default function ({ onEnterChat, user, onSignOut }: TemplateProps) {
                   {item.lastMessage.text}
                 </Text>
 
-                <Text style={styles.date}>{item.lastMessage.date}</Text>
+                <Text style={styles.date}>{item.lastMessage.timestamp}</Text>
               </View>
 
               <Entypo

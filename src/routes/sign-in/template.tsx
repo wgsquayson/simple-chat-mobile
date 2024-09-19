@@ -1,5 +1,5 @@
-import { Text, TouchableOpacity, View } from "react-native";
-import { Layout } from "../../ui/components";
+import { Text, View } from "react-native";
+import { Button, Layout } from "../../ui/components";
 import { useStyle } from "../../ui/hooks";
 import { TemplateProps } from "./model";
 
@@ -20,12 +20,6 @@ export default function ({ onSignIn }: TemplateProps) {
       fontSize: theme.fontSizes.xl,
       fontWeight: 200,
     },
-    buttonText: {
-      color: theme.colors.text.primary,
-      fontSize: theme.fontSizes.sml,
-      fontWeight: 800,
-      textDecorationLine: "underline",
-    },
   }));
 
   return (
@@ -35,9 +29,7 @@ export default function ({ onSignIn }: TemplateProps) {
           <Text style={styles.greeting}>Welcome to</Text>
           <Text style={styles.title}>SimpleChat</Text>
         </View>
-        <TouchableOpacity onPress={onSignIn}>
-          <Text style={styles.buttonText}>Sign in with Google</Text>
-        </TouchableOpacity>
+        <Button label="Sign in with Google" onPress={onSignIn} />
       </View>
     </Layout>
   );

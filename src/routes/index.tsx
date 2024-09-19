@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Chats from "./chats";
 import Chat from "./chat";
 import SignIn from "./sign-in";
-import AuthContext, { useAuthContext } from "../contexts/auth";
+import { useAuthContext } from "../contexts/auth";
 
 export type StackParamList = {
   SignIn: undefined;
@@ -20,19 +20,22 @@ function Routes() {
 
   if (loading) return null;
 
-  const initialRouteName: keyof StackParamList = user ? "Chats" : "SignIn";
-
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName={initialRouteName}
+        initialRouteName={user ? "Chats" : "SignIn"}
       >
-        <Stack.Screen name="SignIn" component={SignIn} />
-        <Stack.Screen name="Chats" component={Chats} />
-        <Stack.Screen name="Chat" component={Chat} />
+        {user ? (
+          <>
+            <Stack.Screen name="Chats" component={Chats} />
+            <Stack.Screen name="Chat" component={Chat} />
+          </>
+        ) : (
+          <Stack.Screen name="SignIn" component={SignIn} />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

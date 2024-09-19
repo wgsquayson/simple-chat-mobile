@@ -4,11 +4,7 @@ import { SignInProps } from "./model";
 import Template from "./template";
 
 export default function SignIn({ navigation }: SignInProps) {
-  const { user, signIn } = useAuthContext();
-
-  useEffect(() => {
-    if (user) navigation.replace("Chats");
-  }, [user]);
+  const { signIn } = useAuthContext();
 
   return <Template onSignIn={signIn} />;
 }

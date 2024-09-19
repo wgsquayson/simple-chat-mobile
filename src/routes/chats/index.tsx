@@ -11,18 +11,13 @@ export default function Chats({ navigation }: ChatsProps) {
     });
   }
 
-  function _signOut() {
-    signOut();
-    navigation.replace("SignIn");
-  }
-
   if (!user) {
-    _signOut();
+    signOut();
 
     return null;
   }
 
   return (
-    <Template onSignOut={_signOut} user={user} onEnterChat={handleEnterChat} />
+    <Template onSignOut={signOut} user={user} onEnterChat={handleEnterChat} />
   );
 }

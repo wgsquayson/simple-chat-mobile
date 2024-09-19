@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Layout } from "../../ui/components";
+import { Button, Layout } from "../../ui/components";
 import { useStyle } from "../../ui/hooks";
 import Entypo from "@expo/vector-icons/Entypo";
 import { TemplateProps } from "./model";
@@ -54,7 +54,7 @@ const chats: Chat[] = [
   },
 ];
 
-export default function ({ onEnterChat }: TemplateProps) {
+export default function ({ onEnterChat, user, onSignOut }: TemplateProps) {
   const styles = useStyle((theme) => {
     const lastMessage: TextStyle = {
       color: theme.colors.text.primary,
@@ -63,9 +63,13 @@ export default function ({ onEnterChat }: TemplateProps) {
 
     return {
       header: {
+        marginBottom: theme.spacing.md,
+        gap: theme.spacing.xxs,
+      },
+      row: {
         flexDirection: "row",
         justifyContent: "space-between",
-        marginBottom: theme.spacing.sml,
+        alignItems: "center",
       },
       pageTitle: {
         color: theme.colors.text.primary,
@@ -104,8 +108,8 @@ export default function ({ onEnterChat }: TemplateProps) {
 
   return (
     <Layout>
-      <>
-        <View style={styles.header}>
+      <View style={styles.header}>
+        <View style={styles.row}>
           <Text style={styles.pageTitle}>SimpleChat</Text>
           <TouchableOpacity>
             <Entypo
@@ -115,7 +119,9 @@ export default function ({ onEnterChat }: TemplateProps) {
             />
           </TouchableOpacity>
         </View>
-      </>
+        <Text style={styles.lastMessage}>Hello, {user.name}!</Text>
+        <Button label="Sign out" onPress={onSignOut} />
+      </View>
       <FlatList
         ItemSeparatorComponent={() => (
           <>

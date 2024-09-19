@@ -17,12 +17,12 @@ import {
 const AuthContext = createContext<AuthContextValue>({
   signIn: () => new Promise(() => {}),
   signOut: () => new Promise(() => {}),
-  loading: true,
+  loading: false,
 });
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<User | undefined>();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   function updateUser(user: GoogleUser["user"]) {
     setUser({

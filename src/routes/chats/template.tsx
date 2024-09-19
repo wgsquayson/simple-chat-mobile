@@ -11,63 +11,13 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { TemplateProps } from "./model";
 import { User } from "../../contexts/auth/model";
 
-type Chat = {
-  id: string;
-  recipient: User;
-  lastMessage: {
-    text: string;
-    timestamp: string;
-    read: boolean;
-    sentByMe: boolean;
-  };
-};
-
-const chats: Chat[] = [
-  {
-    id: "1",
-    recipient: {
-      id: "1",
-      email: "mark@email.com",
-      name: "Mark",
-    },
-    lastMessage: {
-      timestamp: "17/09 - 11:07",
-      text: "Hey, how you doing? I know we had our differences in the past but i would really like to",
-      read: false,
-      sentByMe: false,
-    },
-  },
-  {
-    id: "2",
-    recipient: {
-      id: "2",
-      email: "anna@email.com",
-      name: "Anna",
-    },
-    lastMessage: {
-      timestamp: "15/09 - 11:10",
-      text: "No",
-      read: true,
-      sentByMe: true,
-    },
-  },
-  {
-    id: "3",
-    recipient: {
-      id: "3",
-      email: "joseph@email.com",
-      name: "Joseph",
-    },
-    lastMessage: {
-      timestamp: "10/09 - 11:07",
-      text: "Sure!",
-      read: false,
-      sentByMe: true,
-    },
-  },
-];
-
-export default function ({ onEnterChat, user, onSignOut }: TemplateProps) {
+export default function ({
+  onEnterChat,
+  user,
+  chats,
+  loading,
+  onSignOut,
+}: TemplateProps) {
   const styles = useStyle((theme) => {
     const lastMessage: TextStyle = {
       color: theme.colors.text.primary,
@@ -144,15 +94,21 @@ export default function ({ onEnterChat, user, onSignOut }: TemplateProps) {
         ListEmptyComponent={
           <>
             <Text style={styles.lastMessage}>
-              No chats found. Touch the + icon to start a new chat.
+              {loading
+                ? "Loading..."
+                : "No chats found. Touch the + icon to start a new chat."}
             </Text>
           </>
         }
         data={chats}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
+          const recipient = item.participants.find(
+            (participant) => participant.id !== user.id
+          );
+
           const shouldHighlight =
-            !item.lastMessage.sentByMe && !item.lastMessage.read;
+            item.lastMessage.senderId !== user.id && !item.lastMessage.read;
 
           return (
             <TouchableOpacity
@@ -160,7 +116,7 @@ export default function ({ onEnterChat, user, onSignOut }: TemplateProps) {
               onPress={() => onEnterChat(item.id)}
             >
               <View style={styles.chatInfo}>
-                <Text style={styles.recipientName}>{item.recipient.name}</Text>
+                <Text style={styles.recipientName}>{recipient?.name}</Text>
 
                 <Text
                   style={
@@ -174,7 +130,9 @@ export default function ({ onEnterChat, user, onSignOut }: TemplateProps) {
                   {item.lastMessage.text}
                 </Text>
 
-                <Text style={styles.date}>{item.lastMessage.timestamp}</Text>
+                <Text style={styles.date}>
+                  {item.lastMessage.timestamp.seconds}
+                </Text>
               </View>
 
               <Entypo

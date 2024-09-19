@@ -8,4 +8,21 @@ export type TemplateProps = {
   onEnterChat: (chatId: string) => void;
   user: User;
   onSignOut: () => void;
+  chats: ChatSummary[];
+  loading: boolean;
+};
+
+export type ChatSummary = {
+  id: string;
+  participantIds: string[];
+  participants: User[];
+  lastMessage: {
+    text: string;
+    timestamp: {
+      seconds: number;
+      nanoseconds: number;
+    };
+    read: boolean;
+    senderId: string;
+  };
 };

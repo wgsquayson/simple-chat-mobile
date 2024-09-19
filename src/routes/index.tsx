@@ -1,11 +1,9 @@
-// In App.js in a new project
-
-import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Chats from "./chats";
 import Chat from "./chat";
 import SignIn from "./sign-in";
+import AuthContext, { useAuthContext } from "../contexts/auth";
 
 export type StackParamList = {
   SignIn: undefined;
@@ -18,13 +16,19 @@ export type StackParamList = {
 const Stack = createNativeStackNavigator<StackParamList>();
 
 function Routes() {
+  const { user, loading } = useAuthContext();
+
+  if (loading) return null;
+
+  const initialRouteName: keyof StackParamList = user ? "Chats" : "SignIn";
+
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="SignIn"
+        initialRouteName={initialRouteName}
       >
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="Chats" component={Chats} />

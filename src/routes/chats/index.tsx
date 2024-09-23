@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../../contexts/auth";
 import { ChatsProps, ChatSummary } from "./model";
 import Template from "./template";
-import firestore from "@react-native-firebase/firestore";
+import firestore, {
+  FirebaseFirestoreTypes,
+} from "@react-native-firebase/firestore";
 import CreateChat from "./components/create-chat";
 import { User } from "../../contexts/auth/model";
 import { showErrorToast, validateEmail } from "../../utils";
-
-const FAIL_TO_FETCH_ERROR =
-  "An error happened while trying to retrieve your chats. Pull to refresh the page.";
+import STRINGS from "./strings";
 
 export default function Chats({ navigation }: ChatsProps) {
   const { user, signOut } = useAuthContext();
@@ -19,6 +19,24 @@ export default function Chats({ navigation }: ChatsProps) {
   const [creatingChat, setCreatingChat] = useState(false);
   const [refetching, setRefetching] = useState(false);
 
+  function formatAndSetChats(
+    chatDocs: FirebaseFirestoreTypes.QueryDocumentSnapshot<FirebaseFirestoreTypes.DocumentData>[]
+  ) {
+    const chatSummaries: ChatSummary[] = chatDocs.map((doc) => ({
+      id: doc.id,
+      lastMessage: doc.data().lastMessage,
+      participantIds: doc.data().participantIds,
+      participants: doc.data().participants,
+    }));
+
+    const sortedChats = chatSummaries.sort(
+      (a, b) =>
+        b.lastMessage.timestamp?.seconds - a.lastMessage.timestamp?.seconds
+    );
+
+    setChats(sortedChats);
+  }
+
   useEffect(() => {
     const unsubscribe = firestore()
       .collection("chatSummaries")
@@ -26,28 +44,13 @@ export default function Chats({ navigation }: ChatsProps) {
       .onSnapshot(
         (chatsSnapshot) => {
           if (chatsSnapshot.docs) {
-            const chatSummaries: ChatSummary[] = chatsSnapshot.docs.map(
-              (doc) => ({
-                id: doc.id,
-                lastMessage: doc.data().lastMessage,
-                participantIds: doc.data().participantIds,
-                participants: doc.data().participants,
-              })
-            );
-
-            const sortedChats = chatSummaries.sort(
-              (a, b) =>
-                b.lastMessage.timestamp?.seconds -
-                a.lastMessage.timestamp?.seconds
-            );
-
-            setChats(sortedChats);
+            formatAndSetChats(chatsSnapshot.docs);
           }
           setLoading(false);
         },
         () => {
           showErrorToast({
-            text2: FAIL_TO_FETCH_ERROR,
+            text2: STRINGS.ERRORS.FETCH.DESCRIPTION,
           });
           setLoading(false);
         }
@@ -78,15 +81,15 @@ export default function Chats({ navigation }: ChatsProps) {
   async function handleCreateChat(email: string) {
     if (!validateEmail(email)) {
       return showErrorToast({
-        text1: "Invalid e-mail.",
-        text2: "Try again with a valid e-mail.",
+        text1: STRINGS.ERRORS.INVALID_EMAIL.TITLE,
+        text2: STRINGS.ERRORS.INVALID_EMAIL.DESCRIPTION,
       });
     }
 
     if (email === user?.email)
       return showErrorToast({
-        text1: "Do not use your own e-mail",
-        text2: "You can't talk with yourself, lol",
+        text1: STRINGS.ERRORS.SAME_EMAIL.TITLE,
+        text2: STRINGS.ERRORS.SAME_EMAIL.DESCRIPTION,
       });
 
     setCreatingChat(true);
@@ -101,8 +104,8 @@ export default function Chats({ navigation }: ChatsProps) {
         setCreatingChat(false);
 
         return showErrorToast({
-          text1: "User not found",
-          text2: "This user is not in our database yet. Invite them!",
+          text1: STRINGS.ERRORS.USER_NOT_FOUND.TITLE,
+          text2: STRINGS.ERRORS.USER_NOT_FOUND.DESCRIPTION,
         });
       }
 
@@ -112,7 +115,7 @@ export default function Chats({ navigation }: ChatsProps) {
 
       if (existingChat) {
         setModalVisible(false);
-        return navigation.navigate("Chat", { chatId: existingChat });
+        return handleEnterChat(existingChat);
       }
 
       const participants: User[] = [
@@ -150,9 +153,11 @@ export default function Chats({ navigation }: ChatsProps) {
 
       setModalVisible(false);
 
-      navigation.navigate("Chat", { chatId });
+      handleEnterChat(chatId);
     } catch (error) {
-      showErrorToast();
+      showErrorToast({
+        text2: STRINGS.ERRORS.CREATE_CHAT.DESCRIPTION,
+      });
     } finally {
       setCreatingChat(false);
     }
@@ -166,22 +171,10 @@ export default function Chats({ navigation }: ChatsProps) {
         .where("participantIds", "array-contains", user?.id)
         .get();
 
-      const chatSummaries: ChatSummary[] = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        lastMessage: doc.data().lastMessage,
-        participantIds: doc.data().participantIds,
-        participants: doc.data().participants,
-      }));
-
-      const sortedChats = chatSummaries.sort(
-        (a, b) =>
-          b.lastMessage.timestamp?.seconds - a.lastMessage.timestamp?.seconds
-      );
-
-      setChats(sortedChats);
+      formatAndSetChats(snapshot.docs);
     } catch (error) {
       showErrorToast({
-        text2: FAIL_TO_FETCH_ERROR,
+        text2: STRINGS.ERRORS.FETCH.DESCRIPTION,
       });
     } finally {
       setRefetching(false);

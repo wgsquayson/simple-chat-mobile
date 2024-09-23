@@ -10,7 +10,8 @@ import { Button, Layout, Row } from "../../ui/components";
 import { useStyle } from "../../ui/hooks";
 import Entypo from "@expo/vector-icons/Entypo";
 import { TemplateProps } from "./model";
-import { formatDate } from "../../utils";
+import { formatDate, placeValues } from "../../utils";
+import STRINGS from "./strings";
 
 export default function ({
   onEnterChat,
@@ -72,7 +73,7 @@ export default function ({
     <Layout>
       <View style={styles.header}>
         <Row justifyContent="space-between">
-          <Text style={styles.pageTitle}>SimpleChat</Text>
+          <Text style={styles.pageTitle}>{STRINGS.TITLE}</Text>
           <TouchableOpacity onPress={onCreateChat}>
             <Entypo
               name="plus"
@@ -81,8 +82,10 @@ export default function ({
             />
           </TouchableOpacity>
         </Row>
-        <Text style={styles.lastMessage}>Hello, {user.name}!</Text>
-        <Button label="Sign out" onPress={onSignOut} />
+        <Text style={styles.lastMessage}>
+          {placeValues(STRINGS.DESCRIPTION, user!.name ?? "")}
+        </Text>
+        <Button label={STRINGS.SIGN_OUT_BTN} onPress={onSignOut} />
       </View>
       <FlatList
         ItemSeparatorComponent={() => (
@@ -93,9 +96,7 @@ export default function ({
         ListEmptyComponent={
           <>
             <Text style={styles.lastMessage}>
-              {loading
-                ? "Loading..."
-                : "No chats found. Touch the + icon to start a new chat."}
+              {loading ? STRINGS.LOADING : STRINGS.NO_CHATS}
             </Text>
           </>
         }

@@ -10,7 +10,7 @@ import {
   ViewStyle,
 } from "react-native";
 import { TemplateProps } from "./model";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { formatDate, showErrorToast } from "../../utils";
 
 export default function ({
@@ -25,6 +25,7 @@ export default function ({
   const flatlistRef = useRef<FlatList>(null);
 
   const [message, setMessage] = useState("");
+  const [lastMessage, setLastMessage] = useState("");
 
   const styles = useStyle((theme) => {
     const messageBubble: ViewStyle = {
@@ -89,6 +90,12 @@ export default function ({
     };
   });
 
+  useEffect(() => {
+    if (hasError) {
+      setMessage(lastMessage);
+    }
+  }, [hasError, lastMessage]);
+
   if (loading) return <FullscreenLoading />;
 
   const receiver = chat.participants.find(
@@ -101,12 +108,10 @@ export default function ({
     return null;
   }
 
-  async function handleSendMessage() {
-    await onSendMessage({ text: message });
-
-    if (!hasError) {
-      setMessage("");
-    }
+  function handleSendMessage() {
+    setLastMessage(message);
+    onSendMessage({ text: message });
+    setMessage("");
   }
 
   return (

@@ -2,6 +2,7 @@ import { Text, View } from "react-native";
 import { Button, Layout } from "../../ui/components";
 import { useStyle } from "../../ui/hooks";
 import { TemplateProps } from "./model";
+import STRINGS from "./strings";
 
 export default function ({ onSignIn }: TemplateProps) {
   const styles = useStyle((theme) => ({
@@ -26,10 +27,10 @@ export default function ({ onSignIn }: TemplateProps) {
     <Layout>
       <View style={styles.container}>
         <View style={{ alignItems: "center" }}>
-          <Text style={styles.greeting}>Welcome to</Text>
-          <Text style={styles.title}>SimpleChat</Text>
+          <Text style={styles.greeting}>{STRINGS.GREETINGS}</Text>
+          <Text style={styles.title}>{STRINGS.TITLE}</Text>
         </View>
-        <Button label="Sign in with Google" onPress={onSignIn} />
+        <Button label={STRINGS.GOOGLE_SIGN_IN} onPress={onSignIn} />
       </View>
     </Layout>
   );

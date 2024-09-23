@@ -1,6 +1,7 @@
 export default {
   SENDING_IMAGE: "Sending image...",
   NO_MESSAGES: "No messages yet.",
+  IMAGE: "Image",
   SEND_IMAGE_OPTIONS: {
     TITLE: "Choose an option",
     CAMERA: "Camera",

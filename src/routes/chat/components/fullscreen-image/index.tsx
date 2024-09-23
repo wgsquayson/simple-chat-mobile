@@ -2,6 +2,7 @@ import { Image, Modal } from "react-native";
 import { useStyle } from "../../../../ui/hooks";
 import { Layout } from "../../../../ui/components";
 import { FullscreenImageProps } from "./model";
+import STRINGS from "../../strings";
 
 export default function FullscreenImage({
   imageUrl,
@@ -19,7 +20,7 @@ export default function FullscreenImage({
     <Modal animationType="slide" onRequestClose={onClose} {...props}>
       <Layout
         header={{
-          title: "Image",
+          title: STRINGS.IMAGE,
           rightIcon: "cross",
           onRightPress: onClose,
           leftIcon: "none",

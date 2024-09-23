@@ -38,12 +38,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.wgsquayson.simplechat",
-      "googleServicesFile": "./google-services.json",
-      "permissions": [
-        "CAMERA",
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE"
-      ]
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"

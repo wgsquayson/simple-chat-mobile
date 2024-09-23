@@ -10,13 +10,13 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		3062F6DEA0646D37235F4C86 /* Pods_simplechat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B870102CC021FF8F00AA179F /* Pods_simplechat.framework */; };
-		3A72F49732CB0D8FF369BE9C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 5208169B1D124C4BF6A9FFED /* PrivacyInfo.xcprivacy */; };
+		24D3A7AF5386486192BD8CF0 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30116D5343C147679439ED55 /* noop-file.swift */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		7BCEA98D81114A10A5D0ED7D /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600F32CBF5134D469E118E2B /* noop-file.swift */; };
+		902D9A7948F8042732473EAA /* Pods_simplechat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1B8FAF8E8017BF575E0BD79 /* Pods_simplechat.framework */; };
+		ACA287B7271A4F7ABC206201 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9280A6FA7C524BAEB26764E6 /* GoogleService-Info.plist */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
-		BA001974C48440009DED0319 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 412E489661B24480A8049278 /* GoogleService-Info.plist */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+		C440FE5487808993DEF16040 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 598E391466B3B090FBE16B66 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,14 +26,14 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = simplechat/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = simplechat/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = simplechat/main.m; sourceTree = "<group>"; };
-		412E489661B24480A8049278 /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "simplechat/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		4AE2DEFEDABE42378D3F4C16 /* simplechat-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "simplechat-Bridging-Header.h"; path = "simplechat/simplechat-Bridging-Header.h"; sourceTree = "<group>"; };
-		5208169B1D124C4BF6A9FFED /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = simplechat/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		600F32CBF5134D469E118E2B /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "simplechat/noop-file.swift"; sourceTree = "<group>"; };
+		30116D5343C147679439ED55 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "simplechat/noop-file.swift"; sourceTree = "<group>"; };
+		598E391466B3B090FBE16B66 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = simplechat/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		6C2E3173556A471DD304B334 /* Pods-simplechat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-simplechat.debug.xcconfig"; path = "Target Support Files/Pods-simplechat/Pods-simplechat.debug.xcconfig"; sourceTree = "<group>"; };
+		6DCD5A30F0A741D9879BA14A /* simplechat-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "simplechat-Bridging-Header.h"; path = "simplechat/simplechat-Bridging-Header.h"; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-simplechat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-simplechat.release.xcconfig"; path = "Target Support Files/Pods-simplechat/Pods-simplechat.release.xcconfig"; sourceTree = "<group>"; };
+		9280A6FA7C524BAEB26764E6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "simplechat/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = simplechat/SplashScreen.storyboard; sourceTree = "<group>"; };
-		B870102CC021FF8F00AA179F /* Pods_simplechat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_simplechat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1B8FAF8E8017BF575E0BD79 /* Pods_simplechat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_simplechat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-simplechat/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
@@ -44,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3062F6DEA0646D37235F4C86 /* Pods_simplechat.framework in Frameworks */,
+				902D9A7948F8042732473EAA /* Pods_simplechat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,10 +61,10 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				412E489661B24480A8049278 /* GoogleService-Info.plist */,
-				600F32CBF5134D469E118E2B /* noop-file.swift */,
-				4AE2DEFEDABE42378D3F4C16 /* simplechat-Bridging-Header.h */,
-				5208169B1D124C4BF6A9FFED /* PrivacyInfo.xcprivacy */,
+				9280A6FA7C524BAEB26764E6 /* GoogleService-Info.plist */,
+				30116D5343C147679439ED55 /* noop-file.swift */,
+				6DCD5A30F0A741D9879BA14A /* simplechat-Bridging-Header.h */,
+				598E391466B3B090FBE16B66 /* PrivacyInfo.xcprivacy */,
 			);
 			name = simplechat;
 			sourceTree = "<group>";
@@ -73,7 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				B870102CC021FF8F00AA179F /* Pods_simplechat.framework */,
+				B1B8FAF8E8017BF575E0BD79 /* Pods_simplechat.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -150,14 +150,14 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "simplechat" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				0F106776268FAFADE589B8EF /* [Expo] Configure project */,
+				46E46DC4861068E58873A0A5 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				0B35BB5BFE36F00737CECDAA /* [CP] Embed Pods Frameworks */,
-				538CBD24D336EDDB320F5529 /* [CP-User] [RNFB] Core Configuration */,
+				E4E822876DA2B61739457130 /* [CP] Embed Pods Frameworks */,
+				55877A37E850A1828B36608F /* [CP-User] [RNFB] Core Configuration */,
 			);
 			buildRules = (
 			);
@@ -207,8 +207,8 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				BA001974C48440009DED0319 /* GoogleService-Info.plist in Resources */,
-				3A72F49732CB0D8FF369BE9C /* PrivacyInfo.xcprivacy in Resources */,
+				ACA287B7271A4F7ABC206201 /* GoogleService-Info.plist in Resources */,
+				C440FE5487808993DEF16040 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,25 +252,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		0B35BB5BFE36F00737CECDAA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-simplechat/Pods-simplechat-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-simplechat/Pods-simplechat-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		0F106776268FAFADE589B8EF /* [Expo] Configure project */ = {
+		46E46DC4861068E58873A0A5 /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -289,7 +271,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-simplechat/expo-configure-project.sh\"\n";
 		};
-		538CBD24D336EDDB320F5529 /* [CP-User] [RNFB] Core Configuration */ = {
+		55877A37E850A1828B36608F /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -362,6 +344,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-simplechat/Pods-simplechat-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E4E822876DA2B61739457130 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-simplechat/Pods-simplechat-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-simplechat/Pods-simplechat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -372,7 +372,7 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
-				7BCEA98D81114A10A5D0ED7D /* noop-file.swift in Sources */,
+				24D3A7AF5386486192BD8CF0 /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

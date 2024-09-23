@@ -15,6 +15,7 @@ import {
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import { showErrorToast } from "../../utils";
+import STRINGS from "./strings";
 
 const AuthContext = createContext<AuthContextValue>({
   signIn: () => new Promise(() => {}),
@@ -62,12 +63,12 @@ export function AuthProvider({ children }: PropsWithChildren) {
         switch (error.code) {
           case statusCodes.IN_PROGRESS:
             showErrorToast({
-              text2: "Sign up already in progress",
+              text2: STRINGS.ERRORS.SIGN_IN_IN_PROGRESS,
             });
             break;
           case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
             showErrorToast({
-              text2: "Your Google Play Services is outdated or not installed.",
+              text2: STRINGS.ERRORS.PLAY_SERVICES,
             });
             break;
           default:

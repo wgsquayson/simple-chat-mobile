@@ -98,8 +98,8 @@ export default function Chat({ navigation, route }: ChatProps) {
       setHasError(true);
 
       showErrorToast({
-        text1: "Error sending message",
-        text2: "Try again.",
+        text1: STRINGS.ERRORS.SEND_MESSAGE.TITLE,
+        text2: STRINGS.ERRORS.SEND_MESSAGE.DESCRIPTION,
       });
     } finally {
       setSendingMessage(false);

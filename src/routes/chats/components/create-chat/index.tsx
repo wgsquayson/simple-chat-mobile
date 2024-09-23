@@ -4,6 +4,7 @@ import { Button, Layout, Row } from "../../../../ui/components";
 import { CreateChatProps } from "./model";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
+import STRINGS from "./strings";
 
 export default function CreateChat({
   onConfirm,
@@ -38,14 +39,14 @@ export default function CreateChat({
       <Layout
         header={{
           leftIcon: "none",
-          title: "Create a chat",
+          title: STRINGS.TITLE,
           rightIcon: "cross",
           onRightPress: _onClose,
         }}
         footer={
           <Row justifyContent="center" marginBottom={styles.theme.spacing.sml}>
             <Button
-              label="Confirm"
+              label={STRINGS.CONFIRM_BTN}
               onPress={onSubmit}
               loading={loading}
               disabled={!email}
@@ -55,7 +56,7 @@ export default function CreateChat({
       >
         <TextInput
           style={styles.input}
-          placeholder="Type a Gmail"
+          placeholder={STRINGS.PLACEHOLDER}
           placeholderTextColor={styles.theme.colors.text.primaryDarker}
           value={email}
           onChangeText={setEmail}

@@ -5,11 +5,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Button, Layout } from "../../ui/components";
+import { Button, Layout, Row } from "../../ui/components";
 import { useStyle } from "../../ui/hooks";
 import Entypo from "@expo/vector-icons/Entypo";
 import { TemplateProps } from "./model";
-import { User } from "../../contexts/auth/model";
+import { formatDate } from "../../utils";
 
 export default function ({
   onEnterChat,
@@ -17,6 +17,7 @@ export default function ({
   chats,
   loading,
   onSignOut,
+  onCreateChat,
 }: TemplateProps) {
   const styles = useStyle((theme) => {
     const lastMessage: TextStyle = {
@@ -28,11 +29,6 @@ export default function ({
       header: {
         marginBottom: theme.spacing.md,
         gap: theme.spacing.xxs,
-      },
-      row: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
       },
       pageTitle: {
         color: theme.colors.text.primary,
@@ -72,16 +68,16 @@ export default function ({
   return (
     <Layout>
       <View style={styles.header}>
-        <View style={styles.row}>
+        <Row justifyContent="space-between">
           <Text style={styles.pageTitle}>SimpleChat</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onCreateChat}>
             <Entypo
               name="plus"
               size={24}
               color={styles.theme.colors.icon.primary}
             />
           </TouchableOpacity>
-        </View>
+        </Row>
         <Text style={styles.lastMessage}>Hello, {user.name}!</Text>
         <Button label="Sign out" onPress={onSignOut} />
       </View>
@@ -117,24 +113,23 @@ export default function ({
             >
               <View style={styles.chatInfo}>
                 <Text style={styles.recipientName}>{recipient?.name}</Text>
-
-                <Text
-                  style={
-                    shouldHighlight
-                      ? styles.lastMessageBold
-                      : styles.lastMessage
-                  }
-                  numberOfLines={1}
-                  ellipsizeMode="tail"
-                >
-                  {item.lastMessage.text}
-                </Text>
-
+                {item.lastMessage.text ? (
+                  <Text
+                    style={
+                      shouldHighlight
+                        ? styles.lastMessageBold
+                        : styles.lastMessage
+                    }
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    {item.lastMessage.text}
+                  </Text>
+                ) : null}
                 <Text style={styles.date}>
-                  {item.lastMessage.timestamp.seconds}
+                  {formatDate(item.lastMessage.timestamp.seconds)}
                 </Text>
               </View>
-
               <Entypo
                 name="chevron-small-right"
                 size={24}

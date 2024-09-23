@@ -10,6 +10,7 @@ export type TemplateProps = {
   onSignOut: () => void;
   chats: ChatSummary[];
   loading: boolean;
+  onCreateChat: () => void;
 };
 
 export type ChatSummary = {

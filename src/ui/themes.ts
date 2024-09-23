@@ -6,15 +6,16 @@ export const defaultTheme = {
     },
     text: {
       primary: "#FFFFFF",
+      primaryDarker: "#686D76",
       secondary: "#121212",
     },
     border: {
-      primary: "#2F2F2F",
+      primary: "#686D76",
     },
     icon: {
       primary: "#FFFFFF",
       secondary: "#121212",
-      secondaryLighter: "#2F2F2F",
+      secondaryLighter: "#686D76",
     },
   },
   spacing: {

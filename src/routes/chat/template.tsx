@@ -5,6 +5,7 @@ import {
   Dimensions,
   FlatList,
   Image,
+  Pressable,
   Text,
   TextInput,
   TouchableOpacity,
@@ -14,6 +15,7 @@ import {
 import { TemplateProps } from "./model";
 import { useEffect, useRef, useState } from "react";
 import { formatDate, showErrorToast } from "../../utils";
+import FullscreenImage from "./components/fullscreen-image";
 
 export default function ({
   onGoBack,
@@ -30,6 +32,8 @@ export default function ({
 
   const [message, setMessage] = useState("");
   const [lastMessage, setLastMessage] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedImageUrl, setSelectedImageUrl] = useState("");
 
   const styles = useStyle((theme) => {
     const messageBubble: ViewStyle = {
@@ -118,93 +122,107 @@ export default function ({
   }
 
   return (
-    <Layout>
-      <Row
-        marginBottom={styles.theme.spacing.sml}
-        justifyContent="space-between"
-      >
-        <Row gap={styles.theme.spacing.sml}>
-          <TouchableOpacity onPress={onGoBack}>
+    <>
+      <Layout>
+        <Row
+          marginBottom={styles.theme.spacing.sml}
+          justifyContent="space-between"
+        >
+          <Row gap={styles.theme.spacing.sml}>
+            <TouchableOpacity onPress={onGoBack}>
+              <Entypo
+                name="chevron-left"
+                size={24}
+                color={styles.theme.colors.text.primary}
+              />
+            </TouchableOpacity>
+            <Text style={styles.headerText}>{receiver.name}</Text>
+          </Row>
+          <TouchableOpacity onPress={onPressCamera}>
             <Entypo
-              name="chevron-left"
+              name="camera"
               size={24}
               color={styles.theme.colors.text.primary}
             />
           </TouchableOpacity>
-          <Text style={styles.headerText}>{receiver.name}</Text>
         </Row>
-        <TouchableOpacity onPress={onPressCamera}>
-          <Entypo
-            name="camera"
-            size={24}
-            color={styles.theme.colors.text.primary}
-          />
-        </TouchableOpacity>
-      </Row>
-      <FlatList
-        ref={flatlistRef}
-        inverted
-        ListEmptyComponent={
-          <Text style={styles.infoText}>No messages yet.</Text>
-        }
-        showsVerticalScrollIndicator={false}
-        data={[...chat.messages].reverse()}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => {
-          const isSentMessage = item.senderId === user.id;
+        <FlatList
+          ref={flatlistRef}
+          inverted
+          ListEmptyComponent={
+            <Text style={styles.infoText}>No messages yet.</Text>
+          }
+          showsVerticalScrollIndicator={false}
+          data={[...chat.messages].reverse()}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => {
+            const isSentMessage = item.senderId === user.id;
 
-          return (
-            <>
-              <View
-                style={
-                  isSentMessage
-                    ? styles.messageBubbleSender
-                    : styles.messageBubbleReceiver
-                }
-              >
-                {item.imageUrl ? (
-                  <Image
-                    style={styles.image}
-                    source={{ uri: item.imageUrl }}
-                    resizeMode="cover"
-                  />
-                ) : (
-                  <Text style={styles.messageText}>{item.text}</Text>
-                )}
-                <Text style={styles.date}>
-                  {formatDate(item.timestamp.seconds)}
-                </Text>
-              </View>
-              <View style={{ height: styles.theme.spacing.xxs }} />
-            </>
-          );
-        }}
-      />
-      {sendingImage ? (
-        <Text
-          style={[styles.infoText, { marginTop: styles.theme.spacing.sml }]}
-        >
-          Sending image...
-        </Text>
-      ) : null}
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          value={message}
-          onChangeText={setMessage}
+            function onPressImage() {
+              setSelectedImageUrl(item.imageUrl);
+              setModalVisible(true);
+            }
+
+            return (
+              <>
+                <View
+                  style={
+                    isSentMessage
+                      ? styles.messageBubbleSender
+                      : styles.messageBubbleReceiver
+                  }
+                >
+                  {item.imageUrl ? (
+                    <Pressable onPress={onPressImage}>
+                      <Image
+                        style={styles.image}
+                        source={{ uri: item.imageUrl }}
+                        resizeMode="cover"
+                      />
+                    </Pressable>
+                  ) : (
+                    <Text style={styles.messageText}>{item.text}</Text>
+                  )}
+                  <Text style={styles.date}>
+                    {formatDate(item.timestamp.seconds)}
+                  </Text>
+                </View>
+                <View style={{ height: styles.theme.spacing.xxs }} />
+              </>
+            );
+          }}
         />
-        <TouchableOpacity
-          disabled={!message || sendingMessage || sendingImage}
-          style={styles.sendButton}
-          onPress={handleSendMessage}
-        >
-          <Entypo
-            name="paper-plane"
-            size={24}
-            color={styles.theme.colors.icon.primary}
+        {sendingImage ? (
+          <Text
+            style={[styles.infoText, { marginTop: styles.theme.spacing.sml }]}
+          >
+            Sending image...
+          </Text>
+        ) : null}
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            value={message}
+            onChangeText={setMessage}
           />
-        </TouchableOpacity>
-      </View>
-    </Layout>
+          <TouchableOpacity
+            disabled={!message || sendingMessage || sendingImage}
+            style={styles.sendButton}
+            onPress={handleSendMessage}
+          >
+            <Entypo
+              name="paper-plane"
+              size={24}
+              color={styles.theme.colors.icon.primary}
+            />
+          </TouchableOpacity>
+        </View>
+      </Layout>
+      <FullscreenImage
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        imageUrl={selectedImageUrl}
+      />
+    </>
   );
 }

@@ -35,7 +35,13 @@ export default function Chats({ navigation }: ChatsProps) {
               })
             );
 
-            setChats(chatSummaries);
+            const sortedChats = chatSummaries.sort(
+              (a, b) =>
+                b.lastMessage.timestamp?.seconds -
+                a.lastMessage.timestamp?.seconds
+            );
+
+            setChats(sortedChats);
           }
           setLoading(false);
         },
@@ -128,6 +134,8 @@ export default function Chats({ navigation }: ChatsProps) {
           },
         });
 
+      setModalVisible(false);
+
       navigation.navigate("Chat", { chatId });
     } catch (error) {
       showErrorToast();
@@ -151,7 +159,12 @@ export default function Chats({ navigation }: ChatsProps) {
         participants: doc.data().participants,
       }));
 
-      setChats(chatSummaries);
+      const sortedChats = chatSummaries.sort(
+        (a, b) =>
+          b.lastMessage.timestamp?.seconds - a.lastMessage.timestamp?.seconds
+      );
+
+      setChats(sortedChats);
     } catch (error) {
       showErrorToast({
         text2: FAIL_TO_FETCH_ERROR,

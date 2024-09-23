@@ -1,7 +1,6 @@
-import { Modal, Text, TextInput, TouchableOpacity } from "react-native";
+import { Modal, TextInput } from "react-native";
 import { useStyle } from "../../../../ui/hooks";
 import { Button, Layout, Row } from "../../../../ui/components";
-import Entypo from "@expo/vector-icons/Entypo";
 import { CreateChatProps } from "./model";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
@@ -15,11 +14,6 @@ export default function CreateChat({
   const [email, setEmail] = useState("");
 
   const styles = useStyle((theme) => ({
-    pageTitle: {
-      color: theme.colors.text.primary,
-      fontSize: theme.fontSizes.md,
-      fontWeight: 700,
-    },
     input: {
       color: theme.colors.text.primary,
       fontSize: theme.fontSizes.sml,
@@ -40,8 +34,14 @@ export default function CreateChat({
   }
 
   return (
-    <Modal animationType="slide" {...props}>
+    <Modal animationType="slide" onRequestClose={_onClose} {...props}>
       <Layout
+        header={{
+          leftIcon: "none",
+          title: "Create a chat",
+          rightIcon: "cross",
+          onRightPress: _onClose,
+        }}
         footer={
           <Row justifyContent="center" marginBottom={styles.theme.spacing.sml}>
             <Button
@@ -53,20 +53,6 @@ export default function CreateChat({
           </Row>
         }
       >
-        <Row
-          justifyContent="space-between"
-          marginBottom={styles.theme.spacing.sml}
-        >
-          <Text style={styles.pageTitle}>Create a chat</Text>
-          <TouchableOpacity>
-            <Entypo
-              name="cross"
-              size={24}
-              color={styles.theme.colors.icon.primary}
-              onPress={_onClose}
-            />
-          </TouchableOpacity>
-        </Row>
         <TextInput
           style={styles.input}
           placeholder="Type a Gmail"

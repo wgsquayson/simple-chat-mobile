@@ -1,7 +1,6 @@
-import { Image, Modal, Text, TouchableOpacity } from "react-native";
+import { Image, Modal } from "react-native";
 import { useStyle } from "../../../../ui/hooks";
-import { Layout, Row } from "../../../../ui/components";
-import Entypo from "@expo/vector-icons/Entypo";
+import { Layout } from "../../../../ui/components";
 import { FullscreenImageProps } from "./model";
 
 export default function FullscreenImage({
@@ -9,12 +8,7 @@ export default function FullscreenImage({
   onClose,
   ...props
 }: FullscreenImageProps) {
-  const styles = useStyle((theme) => ({
-    pageTitle: {
-      color: theme.colors.text.primary,
-      fontSize: theme.fontSizes.md,
-      fontWeight: 700,
-    },
+  const styles = useStyle(() => ({
     image: {
       width: "100%",
       height: "100%",
@@ -23,21 +17,14 @@ export default function FullscreenImage({
 
   return (
     <Modal animationType="slide" onRequestClose={onClose} {...props}>
-      <Layout>
-        <Row
-          justifyContent="space-between"
-          marginBottom={styles.theme.spacing.sml}
-        >
-          <Text style={styles.pageTitle}>Image</Text>
-          <TouchableOpacity>
-            <Entypo
-              name="cross"
-              size={24}
-              color={styles.theme.colors.icon.primary}
-              onPress={onClose}
-            />
-          </TouchableOpacity>
-        </Row>
+      <Layout
+        header={{
+          title: "Image",
+          rightIcon: "cross",
+          onRightPress: onClose,
+          leftIcon: "none",
+        }}
+      >
         <Image
           source={{ uri: imageUrl }}
           style={styles.image}

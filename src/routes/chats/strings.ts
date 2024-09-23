@@ -23,7 +23,7 @@ export default {
     },
     FETCH: {
       DESCRIPTION:
-        "An error happened while trying to retrieve your chats. Pull to refresh the page.",
+        "An error happened while trying to retrieve your chats. Pull to refresh the page or try again later.",
     },
   },
 };

@@ -12,6 +12,8 @@ export type TemplateProps = {
   onSendMessage: (params: Pick<Message, "text">) => Promise<void>;
   hasError: boolean;
   sendingMessage: boolean;
+  onPressCamera: () => void;
+  sendingImage: boolean;
 };
 
 export type Message = {
@@ -22,6 +24,7 @@ export type Message = {
     nanoseconds: number;
   };
   senderId: string;
+  imageUrl?: string;
 };
 
 export type Chat = {

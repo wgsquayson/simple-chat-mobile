@@ -5,11 +5,16 @@ import firestore from "@react-native-firebase/firestore";
 import { User } from "../../contexts/auth/model";
 import { useAuthContext } from "../../contexts/auth";
 import { showErrorToast } from "../../utils";
+import useImageUpload from "./hooks/use-image-upload";
 
 export default function Chat({ navigation, route }: ChatProps) {
   const chatId = route.params.chatId;
 
   const { user } = useAuthContext();
+  const { openImageUploadOptions, loading: sendingImage } = useImageUpload(
+    user!.id,
+    chatId
+  );
 
   const [participants, setParticipants] = useState<User[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -109,6 +114,8 @@ export default function Chat({ navigation, route }: ChatProps) {
       onGoBack={navigation.goBack}
       hasError={hasError}
       sendingMessage={sendingMessage}
+      onPressCamera={openImageUploadOptions}
+      sendingImage={sendingImage}
     />
   );
 }

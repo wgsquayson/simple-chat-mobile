@@ -1,8 +1,10 @@
-import { FullscreenLoading, Layout } from "../../ui/components";
+import { FullscreenLoading, Layout, Row } from "../../ui/components";
 import Entypo from "@expo/vector-icons/Entypo";
 import { useStyle } from "../../ui/hooks";
 import {
+  Dimensions,
   FlatList,
+  Image,
   Text,
   TextInput,
   TouchableOpacity,
@@ -21,6 +23,8 @@ export default function ({
   hasError,
   sendingMessage,
   onSendMessage,
+  onPressCamera,
+  sendingImage,
 }: TemplateProps) {
   const flatlistRef = useRef<FlatList>(null);
 
@@ -30,7 +34,7 @@ export default function ({
   const styles = useStyle((theme) => {
     const messageBubble: ViewStyle = {
       backgroundColor: theme.colors.background.secondary,
-      padding: theme.spacing.sml,
+      padding: theme.spacing.xs,
       borderRadius: theme.spacing.xs,
       maxWidth: "80%",
       flex: 0,
@@ -38,12 +42,6 @@ export default function ({
     };
 
     return {
-      header: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: theme.spacing.sml,
-        marginBottom: theme.spacing.sml,
-      },
       headerText: {
         color: theme.colors.text.primary,
         fontWeight: 600,
@@ -87,6 +85,11 @@ export default function ({
       sendButton: {
         opacity: message ? 1 : 0.4,
       },
+      image: {
+        width: Dimensions.get("window").width / 1.5,
+        height: Dimensions.get("window").height / 3,
+        borderRadius: theme.spacing.xs,
+      },
     };
   });
 
@@ -116,16 +119,28 @@ export default function ({
 
   return (
     <Layout>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={onGoBack}>
+      <Row
+        marginBottom={styles.theme.spacing.sml}
+        justifyContent="space-between"
+      >
+        <Row gap={styles.theme.spacing.sml}>
+          <TouchableOpacity onPress={onGoBack}>
+            <Entypo
+              name="chevron-left"
+              size={24}
+              color={styles.theme.colors.text.primary}
+            />
+          </TouchableOpacity>
+          <Text style={styles.headerText}>{receiver.name}</Text>
+        </Row>
+        <TouchableOpacity onPress={onPressCamera}>
           <Entypo
-            name="chevron-left"
+            name="camera"
             size={24}
             color={styles.theme.colors.text.primary}
           />
         </TouchableOpacity>
-        <Text style={styles.headerText}>{receiver.name}</Text>
-      </View>
+      </Row>
       <FlatList
         ref={flatlistRef}
         inverted
@@ -147,7 +162,15 @@ export default function ({
                     : styles.messageBubbleReceiver
                 }
               >
-                <Text style={styles.messageText}>{item.text}</Text>
+                {item.imageUrl ? (
+                  <Image
+                    style={styles.image}
+                    source={{ uri: item.imageUrl }}
+                    resizeMode="cover"
+                  />
+                ) : (
+                  <Text style={styles.messageText}>{item.text}</Text>
+                )}
                 <Text style={styles.date}>
                   {formatDate(item.timestamp.seconds)}
                 </Text>
@@ -157,6 +180,13 @@ export default function ({
           );
         }}
       />
+      {sendingImage ? (
+        <Text
+          style={[styles.infoText, { marginTop: styles.theme.spacing.sml }]}
+        >
+          Sending image...
+        </Text>
+      ) : null}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -164,7 +194,7 @@ export default function ({
           onChangeText={setMessage}
         />
         <TouchableOpacity
-          disabled={!message || sendingMessage}
+          disabled={!message || sendingMessage || sendingImage}
           style={styles.sendButton}
           onPress={handleSendMessage}
         >

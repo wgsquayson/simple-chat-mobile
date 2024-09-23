@@ -1,4 +1,4 @@
-import { Layout } from "../../ui/components";
+import { FullscreenLoading, Layout } from "../../ui/components";
 import Entypo from "@expo/vector-icons/Entypo";
 import { useStyle } from "../../ui/hooks";
 import {
@@ -89,7 +89,7 @@ export default function ({
     };
   });
 
-  if (loading) return null;
+  if (loading) return <FullscreenLoading />;
 
   const receiver = chat.participants.find(
     (participant) => participant.id !== user.id

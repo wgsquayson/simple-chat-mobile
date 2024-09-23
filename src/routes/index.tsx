@@ -4,6 +4,7 @@ import Chats from "./chats";
 import Chat from "./chat";
 import SignIn from "./sign-in";
 import { useAuthContext } from "../contexts/auth";
+import { FullscreenLoading } from "../ui/components";
 
 export type StackParamList = {
   SignIn: undefined;
@@ -18,7 +19,7 @@ const Stack = createNativeStackNavigator<StackParamList>();
 function Routes() {
   const { user, loading } = useAuthContext();
 
-  if (loading) return null;
+  if (loading) return <FullscreenLoading />;
 
   return (
     <NavigationContainer>

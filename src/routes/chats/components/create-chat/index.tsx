@@ -34,6 +34,11 @@ export default function CreateChat({
     onClose();
   }
 
+  async function onSubmit() {
+    await onConfirm(email);
+    setEmail("");
+  }
+
   return (
     <Modal animationType="slide" {...props}>
       <Layout
@@ -41,7 +46,7 @@ export default function CreateChat({
           <Row justifyContent="center" marginBottom={styles.theme.spacing.sml}>
             <Button
               label="Confirm"
-              onPress={() => onConfirm(email)}
+              onPress={onSubmit}
               loading={loading}
               disabled={!email}
             />

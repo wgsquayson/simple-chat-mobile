@@ -68,6 +68,13 @@ export default function Chats({ navigation }: ChatsProps) {
     });
   }
 
+  function checkForExistingChats(participantId: string) {
+    const chatSearch = chats.find((chat) =>
+      chat.participantIds.includes(participantId)
+    );
+    return chatSearch?.id;
+  }
+
   async function handleCreateChat(email: string) {
     if (!validateEmail(email)) {
       return showErrorToast({
@@ -100,6 +107,13 @@ export default function Chats({ navigation }: ChatsProps) {
       }
 
       const participant = response.docs[0].data();
+
+      const existingChat = checkForExistingChats(participant.id);
+
+      if (existingChat) {
+        setModalVisible(false);
+        return navigation.navigate("Chat", { chatId: existingChat });
+      }
 
       const participants: User[] = [
         user!,

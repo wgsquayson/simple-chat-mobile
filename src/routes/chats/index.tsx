@@ -59,12 +59,6 @@ export default function Chats({ navigation }: ChatsProps) {
     return () => unsubscribe();
   }, [user?.id]);
 
-  if (!user) {
-    signOut();
-
-    return null;
-  }
-
   function handleEnterChat(chatId: string) {
     navigation.navigate("Chat", {
       chatId,
@@ -187,7 +181,7 @@ export default function Chats({ navigation }: ChatsProps) {
         loading={loading}
         chats={chats}
         onSignOut={signOut}
-        user={user}
+        user={user!}
         onEnterChat={handleEnterChat}
         onCreateChat={() => setModalVisible(true)}
         refetching={refetching}

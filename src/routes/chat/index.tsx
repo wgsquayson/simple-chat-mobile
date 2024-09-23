@@ -58,12 +58,6 @@ export default function Chat({ navigation, route }: ChatProps) {
     updateReadMessage();
   }, [messages]);
 
-  if (!user) {
-    showErrorToast();
-    navigation.goBack();
-    return null;
-  }
-
   async function sendMessage({ text }: Pick<Message, "text">) {
     setSendingMessage(true);
     setHasError(false);
@@ -110,7 +104,7 @@ export default function Chat({ navigation, route }: ChatProps) {
   return (
     <Template
       chat={{ participants, messages }}
-      user={user}
+      user={user!}
       loading={loading}
       onSendMessage={sendMessage}
       onGoBack={navigation.goBack}

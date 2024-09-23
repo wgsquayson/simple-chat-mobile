@@ -6,6 +6,7 @@ import { User } from "../../contexts/auth/model";
 import { useAuthContext } from "../../contexts/auth";
 import { showErrorToast } from "../../utils";
 import useImageUpload from "./hooks/use-image-upload";
+import STRINGS from "./strings";
 
 export default function Chat({ navigation, route }: ChatProps) {
   const chatId = route.params.chatId;
@@ -37,7 +38,7 @@ export default function Chat({ navigation, route }: ChatProps) {
         },
         () => {
           showErrorToast({
-            text2: "An error happened while trying to update messages",
+            text2: STRINGS.ERRORS.UPDATE_MESSAGES.DESCRIPTION,
           });
           setLoading(false);
         }

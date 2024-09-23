@@ -16,6 +16,7 @@ import { TemplateProps } from "./model";
 import { useEffect, useRef, useState } from "react";
 import { formatDate, showErrorToast } from "../../utils";
 import FullscreenImage from "./components/fullscreen-image";
+import STRINGS from "./strings";
 
 export default function ({
   onGoBack,
@@ -133,7 +134,7 @@ export default function ({
                   { marginTop: styles.theme.spacing.sml },
                 ]}
               >
-                Sending image...
+                {STRINGS.SENDING_IMAGE}
               </Text>
             ) : null}
             <View style={styles.inputContainer}>
@@ -161,7 +162,7 @@ export default function ({
           ref={flatlistRef}
           inverted
           ListEmptyComponent={
-            <Text style={styles.infoText}>No messages yet.</Text>
+            <Text style={styles.infoText}>{STRINGS.NO_MESSAGES}</Text>
           }
           showsVerticalScrollIndicator={false}
           data={[...chat.messages].reverse()}

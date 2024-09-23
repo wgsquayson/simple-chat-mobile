@@ -4,12 +4,7 @@ import { Alert, Platform } from "react-native";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import { useState } from "react";
 import { showErrorToast } from "../../../../utils";
-
-const PROCESSING_IMAGE_ERROR =
-  "An error happened while processing your image. Try again.";
-
-const SEND_IMAGE_ERROR =
-  "An error happened while trying to send your image. Try again.";
+import STRINGS from "../../strings";
 
 export default function useImageUpload(userId: string, chatId: string) {
   const [loading, setLoading] = useState(false);
@@ -61,7 +56,7 @@ export default function useImageUpload(userId: string, chatId: string) {
       await sendImage(imageUrl);
     } catch (error) {
       showErrorToast({
-        text2: SEND_IMAGE_ERROR,
+        text2: STRINGS.ERRORS.SEND_IMAGE.DESCRIPTION,
       });
     } finally {
       setLoading(false);
@@ -76,15 +71,13 @@ export default function useImageUpload(userId: string, chatId: string) {
       (response) => {
         if (response.errorMessage) {
           return showErrorToast({
-            text2: PROCESSING_IMAGE_ERROR,
+            text2: STRINGS.ERRORS.PROCESS_IMAGE.DESCRIPTION,
           });
         }
         const uri = response.assets && response.assets[0].uri;
 
         if (!uri) {
-          return showErrorToast({
-            text2: PROCESSING_IMAGE_ERROR,
-          });
+          return;
         }
 
         uploadImage(uri);
@@ -101,15 +94,13 @@ export default function useImageUpload(userId: string, chatId: string) {
       (response) => {
         if (response.errorMessage) {
           return showErrorToast({
-            text2: PROCESSING_IMAGE_ERROR,
+            text2: STRINGS.ERRORS.PROCESS_IMAGE.DESCRIPTION,
           });
         }
         const uri = response.assets && response.assets[0].uri;
 
         if (!uri) {
-          return showErrorToast({
-            text2: PROCESSING_IMAGE_ERROR,
-          });
+          return;
         }
 
         uploadImage(uri);
@@ -118,17 +109,17 @@ export default function useImageUpload(userId: string, chatId: string) {
   }
 
   function openImageUploadOptions() {
-    Alert.alert("Pick an option", undefined, [
+    Alert.alert(STRINGS.SEND_IMAGE_OPTIONS.TITLE, undefined, [
       {
-        text: "Gallery",
+        text: STRINGS.SEND_IMAGE_OPTIONS.GALLERY,
         onPress: openGallery,
       },
       {
-        text: "Camera",
+        text: STRINGS.SEND_IMAGE_OPTIONS.CAMERA,
         onPress: openCamera,
       },
       {
-        text: "Cancel",
+        text: STRINGS.SEND_IMAGE_OPTIONS.CANCEL,
         style: "destructive",
       },
     ]);

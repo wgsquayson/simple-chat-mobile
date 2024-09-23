@@ -3,6 +3,7 @@ import Routes from "./src/routes";
 import { StatusBar } from "expo-status-bar";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { AuthProvider } from "./src/contexts/auth";
+import Toast from "react-native-toast-message";
 
 GoogleSignin.configure({
   webClientId:
@@ -18,6 +19,7 @@ export default function App() {
           <Routes />
         </SafeAreaProvider>
       </AuthProvider>
+      <Toast type="error" position="top" autoHide />
     </>
   );
 }

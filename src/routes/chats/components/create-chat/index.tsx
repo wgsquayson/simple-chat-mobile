@@ -4,6 +4,7 @@ import { Button, Layout, Row } from "../../../../ui/components";
 import Entypo from "@expo/vector-icons/Entypo";
 import { CreateChatProps } from "./model";
 import { useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function CreateChat({
   onConfirm,
@@ -42,6 +43,7 @@ export default function CreateChat({
               label="Confirm"
               onPress={() => onConfirm(email)}
               loading={loading}
+              disabled={!email}
             />
           </Row>
         }
@@ -71,6 +73,7 @@ export default function CreateChat({
           autoCapitalize="none"
         />
       </Layout>
+      <Toast type="error" position="top" autoHide />
     </Modal>
   );
 }

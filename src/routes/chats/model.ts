@@ -11,6 +11,8 @@ export type TemplateProps = {
   chats: ChatSummary[];
   loading: boolean;
   onCreateChat: () => void;
+  onRefetch: () => void;
+  refetching: boolean;
 };
 
 export type ChatSummary = {

@@ -1,5 +1,6 @@
 import {
   FlatList,
+  RefreshControl,
   Text,
   TextStyle,
   TouchableOpacity,
@@ -18,6 +19,8 @@ export default function ({
   loading,
   onSignOut,
   onCreateChat,
+  refetching,
+  onRefetch,
 }: TemplateProps) {
   const styles = useStyle((theme) => {
     const lastMessage: TextStyle = {
@@ -95,6 +98,13 @@ export default function ({
                 : "No chats found. Touch the + icon to start a new chat."}
             </Text>
           </>
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={refetching}
+            onRefresh={onRefetch}
+            tintColor={styles.theme.colors.icon.primary}
+          />
         }
         data={chats}
         keyExtractor={(item) => item.id}

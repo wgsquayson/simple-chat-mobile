@@ -5,6 +5,10 @@ import Template from "./template";
 import firestore from "@react-native-firebase/firestore";
 import CreateChat from "./components/create-chat";
 import { User } from "../../contexts/auth/model";
+import { showErrorToast, validateEmail } from "../../utils";
+
+const FAIL_TO_FETCH_ERROR =
+  "An error happened while trying to retrieve your chats. Pull to refresh the page.";
 
 export default function Chats({ navigation }: ChatsProps) {
   const { user, signOut } = useAuthContext();
@@ -13,6 +17,7 @@ export default function Chats({ navigation }: ChatsProps) {
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [creatingChat, setCreatingChat] = useState(false);
+  const [refetching, setRefetching] = useState(false);
 
   useEffect(() => {
     const unsubscribe = firestore()
@@ -34,8 +39,10 @@ export default function Chats({ navigation }: ChatsProps) {
           }
           setLoading(false);
         },
-        (error) => {
-          // show error
+        () => {
+          showErrorToast({
+            text2: FAIL_TO_FETCH_ERROR,
+          });
           setLoading(false);
         }
       );
@@ -56,10 +63,20 @@ export default function Chats({ navigation }: ChatsProps) {
   }
 
   async function handleCreateChat(email: string) {
-    setCreatingChat(true);
+    if (!validateEmail(email)) {
+      return showErrorToast({
+        text1: "Invalid e-mail.",
+        text2: "Try again with a valid e-mail.",
+      });
+    }
 
-    //show error
-    if (email === user?.email) return;
+    if (email === user?.email)
+      return showErrorToast({
+        text1: "Do not use your own e-mail",
+        text2: "You can't talk with yourself, lol",
+      });
+
+    setCreatingChat(true);
 
     try {
       const response = await firestore()
@@ -67,8 +84,14 @@ export default function Chats({ navigation }: ChatsProps) {
         .where("email", "==", email)
         .get();
 
-      //show error
-      if (!response.docs[0].exists) return;
+      if (!response?.docs[0]?.exists) {
+        setCreatingChat(false);
+
+        return showErrorToast({
+          text1: "User not found",
+          text2: "This user is not in our database yet. Invite them!",
+        });
+      }
 
       const participant = response.docs[0].data();
 
@@ -99,7 +122,7 @@ export default function Chats({ navigation }: ChatsProps) {
           participantIds,
           lastMessage: {
             read: false,
-            sentByMe: false,
+            senderId: user?.id,
             text: "",
             timestamp: firestore.FieldValue.serverTimestamp(),
           },
@@ -107,8 +130,34 @@ export default function Chats({ navigation }: ChatsProps) {
 
       navigation.navigate("Chat", { chatId });
     } catch (error) {
+      showErrorToast();
     } finally {
       setCreatingChat(false);
+    }
+  }
+
+  async function refetchMessages() {
+    setRefetching(true);
+    try {
+      const snapshot = await firestore()
+        .collection("chatSummaries")
+        .where("participantIds", "array-contains", user?.id)
+        .get();
+
+      const chatSummaries: ChatSummary[] = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        lastMessage: doc.data().lastMessage,
+        participantIds: doc.data().participantIds,
+        participants: doc.data().participants,
+      }));
+
+      setChats(chatSummaries);
+    } catch (error) {
+      showErrorToast({
+        text2: FAIL_TO_FETCH_ERROR,
+      });
+    } finally {
+      setRefetching(false);
     }
   }
 
@@ -121,6 +170,8 @@ export default function Chats({ navigation }: ChatsProps) {
         user={user}
         onEnterChat={handleEnterChat}
         onCreateChat={() => setModalVisible(true)}
+        refetching={refetching}
+        onRefetch={refetchMessages}
       />
       <CreateChat
         visible={modalVisible}

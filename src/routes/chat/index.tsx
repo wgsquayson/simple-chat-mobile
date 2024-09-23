@@ -60,6 +60,7 @@ export default function Chat({ navigation, route }: ChatProps) {
 
   if (!user) {
     showErrorToast();
+    navigation.goBack();
     return null;
   }
 
@@ -73,7 +74,7 @@ export default function Chat({ navigation, route }: ChatProps) {
           .doc(chatId)
           .collection("messages")
           .doc().id,
-        text: text,
+        text,
         senderId: user?.id,
         timestamp: new Date(),
       };

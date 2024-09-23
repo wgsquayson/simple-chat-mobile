@@ -10,6 +10,8 @@ export type TemplateProps = {
   user: User;
   loading: boolean;
   onSendMessage: (params: Pick<Message, "text">) => Promise<void>;
+  hasError: boolean;
+  sendingMessage: boolean;
 };
 
 export type Message = {

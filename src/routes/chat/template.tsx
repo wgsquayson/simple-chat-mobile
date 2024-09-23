@@ -11,13 +11,15 @@ import {
 } from "react-native";
 import { TemplateProps } from "./model";
 import { useRef, useState } from "react";
-import { formatDate } from "../../utils";
+import { formatDate, showErrorToast } from "../../utils";
 
 export default function ({
   onGoBack,
   chat,
   user,
   loading,
+  hasError,
+  sendingMessage,
   onSendMessage,
 }: TemplateProps) {
   const flatlistRef = useRef<FlatList>(null);
@@ -87,18 +89,24 @@ export default function ({
     };
   });
 
+  if (loading) return null;
+
   const receiver = chat.participants.find(
     (participant) => participant.id !== user.id
   );
 
   if (!receiver) {
-    // show error
+    showErrorToast();
+    onGoBack();
     return null;
   }
 
   async function handleSendMessage() {
     await onSendMessage({ text: message });
-    setMessage("");
+
+    if (!hasError) {
+      setMessage("");
+    }
   }
 
   return (
@@ -151,7 +159,7 @@ export default function ({
           onChangeText={setMessage}
         />
         <TouchableOpacity
-          disabled={!message}
+          disabled={!message || sendingMessage}
           style={styles.sendButton}
           onPress={handleSendMessage}
         >

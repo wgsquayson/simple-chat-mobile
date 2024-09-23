@@ -4,6 +4,7 @@ import Template from "./template";
 import firestore from "@react-native-firebase/firestore";
 import { User } from "../../contexts/auth/model";
 import { useAuthContext } from "../../contexts/auth";
+import { showErrorToast } from "../../utils";
 
 export default function Chat({ navigation, route }: ChatProps) {
   const chatId = route.params.chatId;
@@ -13,6 +14,8 @@ export default function Chat({ navigation, route }: ChatProps) {
   const [participants, setParticipants] = useState<User[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const [sendingMessage, setSendingMessage] = useState(false);
 
   useEffect(() => {
     const unsubscribe = firestore()
@@ -27,8 +30,10 @@ export default function Chat({ navigation, route }: ChatProps) {
           }
           setLoading(false);
         },
-        (error) => {
-          // show error
+        () => {
+          showErrorToast({
+            text2: "An error happened while trying to update messages",
+          });
           setLoading(false);
         }
       );
@@ -48,11 +53,13 @@ export default function Chat({ navigation, route }: ChatProps) {
   }, [messages]);
 
   if (!user) {
-    //show error
+    showErrorToast();
     return null;
   }
 
   async function sendMessage({ text }: Pick<Message, "text">) {
+    setSendingMessage(true);
+    setHasError(false);
     try {
       const newMessage = {
         id: firestore()
@@ -82,7 +89,14 @@ export default function Chat({ navigation, route }: ChatProps) {
         },
       });
     } catch (error) {
-      // show error
+      setHasError(true);
+
+      showErrorToast({
+        text1: "Error sending message",
+        text2: "Try again.",
+      });
+    } finally {
+      setSendingMessage(false);
     }
   }
 
@@ -93,6 +107,8 @@ export default function Chat({ navigation, route }: ChatProps) {
       loading={loading}
       onSendMessage={sendMessage}
       onGoBack={navigation.goBack}
+      hasError={hasError}
+      sendingMessage={sendingMessage}
     />
   );
 }

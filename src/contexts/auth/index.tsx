@@ -14,6 +14,7 @@ import {
 } from "@react-native-google-signin/google-signin";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
+import { showErrorToast } from "../../utils";
 
 const AuthContext = createContext<AuthContextValue>({
   signIn: () => new Promise(() => {}),
@@ -60,16 +61,20 @@ export function AuthProvider({ children }: PropsWithChildren) {
       if (isErrorWithCode(error)) {
         switch (error.code) {
           case statusCodes.IN_PROGRESS:
-            // operation (eg. sign in) already in progress
+            showErrorToast({
+              text2: "Sign up already in progress",
+            });
             break;
           case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-            // Android only, play services not available or outdated
+            showErrorToast({
+              text2: "Your Google Play Services is outdated or not installed.",
+            });
             break;
           default:
-          // some other error happened
+            showErrorToast();
         }
       } else {
-        // an error that's not related to google sign in occurred
+        showErrorToast();
       }
     }
   }
@@ -79,7 +84,9 @@ export function AuthProvider({ children }: PropsWithChildren) {
       await GoogleSignin.signOut();
       await auth().signOut();
       setUser(undefined);
-    } catch (error) {}
+    } catch (error) {
+      showErrorToast();
+    }
   }
 
   function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {

@@ -14,33 +14,34 @@ export default function Chats({ navigation }: ChatsProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const [creatingChat, setCreatingChat] = useState(false);
 
-  async function getUserChatSummaries() {
-    if (!user?.id) return [];
-    setLoading(true);
-
-    try {
-      const chatsSnapshot = await firestore()
-        .collection("chatSummaries")
-        .where("participantIds", "array-contains", user.id)
-        .get();
-
-      const chatSummaries: ChatSummary[] = chatsSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        lastMessage: doc.data().lastMessage,
-        participantIds: doc.data().participantIds,
-        participants: doc.data().participants,
-      }));
-
-      setChats(chatSummaries);
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
-  }
-
   useEffect(() => {
-    getUserChatSummaries();
-  }, []);
+    const unsubscribe = firestore()
+      .collection("chatSummaries")
+      .where("participantIds", "array-contains", user?.id)
+      .onSnapshot(
+        (chatsSnapshot) => {
+          if (chatsSnapshot.docs) {
+            const chatSummaries: ChatSummary[] = chatsSnapshot.docs.map(
+              (doc) => ({
+                id: doc.id,
+                lastMessage: doc.data().lastMessage,
+                participantIds: doc.data().participantIds,
+                participants: doc.data().participants,
+              })
+            );
+
+            setChats(chatSummaries);
+          }
+          setLoading(false);
+        },
+        (error) => {
+          // show error
+          setLoading(false);
+        }
+      );
+
+    return () => unsubscribe();
+  }, [user?.id]);
 
   if (!user) {
     signOut();

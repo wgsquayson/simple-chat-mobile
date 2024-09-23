@@ -10,55 +10,20 @@ import {
   ViewStyle,
 } from "react-native";
 import { TemplateProps } from "./model";
+import { useRef, useState } from "react";
+import { formatDate } from "../../utils";
 
-type Chat = {
-  id: string;
-  participants: {
-    id: string;
-    name: string;
-  }[];
-  messages: {
-    id: string;
-    text: string;
-    date: string;
-    senderId: string;
-  }[];
-};
+export default function ({
+  onGoBack,
+  chat,
+  user,
+  loading,
+  onSendMessage,
+}: TemplateProps) {
+  const flatlistRef = useRef<FlatList>(null);
 
-const currentUser = {
-  id: "1",
-  name: "Will",
-};
+  const [message, setMessage] = useState("");
 
-const chat: Chat = {
-  id: "1",
-  participants: [
-    {
-      id: "1",
-      name: "Will",
-    },
-    {
-      id: "2",
-      name: "Mark",
-    },
-  ],
-  messages: [
-    {
-      id: "1",
-      date: "17/09 - 17:38",
-      senderId: "2",
-      text: "Hey, how you doing? I know we had our differences in the past but i would really like to settle all of it",
-    },
-    {
-      id: "2",
-      date: "17/09 - 17:40",
-      senderId: "1",
-      text: "Hello man, let's work it out.",
-    },
-  ],
-};
-
-export default function ({ onGoBack }: TemplateProps) {
   const styles = useStyle((theme) => {
     const messageBubble: ViewStyle = {
       backgroundColor: theme.colors.background.secondary,
@@ -112,16 +77,28 @@ export default function ({ onGoBack }: TemplateProps) {
         fontSize: theme.fontSizes.sml,
         flex: 1,
       },
+      infoText: {
+        color: theme.colors.text.primary,
+        fontSize: theme.fontSizes.sml,
+      },
+      sendButton: {
+        opacity: message ? 1 : 0.4,
+      },
     };
   });
 
   const receiver = chat.participants.find(
-    (participant) => participant.id !== currentUser.id
+    (participant) => participant.id !== user.id
   );
 
   if (!receiver) {
-    // display error
+    // show error
     return null;
+  }
+
+  async function handleSendMessage() {
+    await onSendMessage({ text: message });
+    setMessage("");
   }
 
   return (
@@ -137,34 +114,47 @@ export default function ({ onGoBack }: TemplateProps) {
         <Text style={styles.headerText}>{receiver.name}</Text>
       </View>
       <FlatList
-        ItemSeparatorComponent={() => (
-          <>
-            <View style={{ height: styles.theme.spacing.xxs }} />
-          </>
-        )}
+        ref={flatlistRef}
+        inverted
+        ListEmptyComponent={
+          <Text style={styles.infoText}>No messages yet.</Text>
+        }
         showsVerticalScrollIndicator={false}
-        data={chat.messages}
+        data={[...chat.messages].reverse()}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
-          const isSentMessage = item.senderId === currentUser.id;
+          const isSentMessage = item.senderId === user.id;
 
           return (
-            <View
-              style={
-                isSentMessage
-                  ? styles.messageBubbleSender
-                  : styles.messageBubbleReceiver
-              }
-            >
-              <Text style={styles.messageText}>{item.text}</Text>
-              <Text style={styles.date}>{item.date}</Text>
-            </View>
+            <>
+              <View
+                style={
+                  isSentMessage
+                    ? styles.messageBubbleSender
+                    : styles.messageBubbleReceiver
+                }
+              >
+                <Text style={styles.messageText}>{item.text}</Text>
+                <Text style={styles.date}>
+                  {formatDate(item.timestamp.seconds)}
+                </Text>
+              </View>
+              <View style={{ height: styles.theme.spacing.xxs }} />
+            </>
           );
         }}
       />
       <View style={styles.inputContainer}>
-        <TextInput style={styles.input} />
-        <TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          value={message}
+          onChangeText={setMessage}
+        />
+        <TouchableOpacity
+          disabled={!message}
+          style={styles.sendButton}
+          onPress={handleSendMessage}
+        >
           <Entypo
             name="paper-plane"
             size={24}

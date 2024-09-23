@@ -106,6 +106,8 @@ export default function ({
           const shouldHighlight =
             item.lastMessage.senderId !== user.id && !item.lastMessage.read;
 
+          const timestamp = item.lastMessage?.timestamp?.seconds;
+
           return (
             <TouchableOpacity
               style={styles.chat}
@@ -126,9 +128,11 @@ export default function ({
                     {item.lastMessage.text}
                   </Text>
                 ) : null}
-                <Text style={styles.date}>
-                  {formatDate(item.lastMessage.timestamp.seconds)}
-                </Text>
+                {timestamp ? (
+                  <Text style={styles.date}>
+                    {formatDate(item.lastMessage.timestamp.seconds)}
+                  </Text>
+                ) : null}
               </View>
               <Entypo
                 name="chevron-small-right"

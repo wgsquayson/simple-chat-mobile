@@ -8,5 +8,4 @@ export type AuthContextValue = {
   user?: User;
   signIn: () => Promise<void>;
   signOut: () => Promise<void>;
-  loading: boolean;
 };

@@ -124,6 +124,8 @@ export default function ({
           title: receiver.name,
           rightIcon: "camera",
           onRightPress: onPressCamera,
+          leftIcon: "chevron-left",
+          onLeftPress: onGoBack,
         }}
         footer={
           <>

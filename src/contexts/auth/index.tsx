@@ -20,12 +20,10 @@ import STRINGS from "./strings";
 const AuthContext = createContext<AuthContextValue>({
   signIn: () => new Promise(() => {}),
   signOut: () => new Promise(() => {}),
-  loading: true,
 });
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<User | undefined>();
-  const [loading, setLoading] = useState(true);
 
   async function signIn() {
     try {
@@ -98,12 +96,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
         name: user.displayName,
       });
     }
-
-    setLoading(false);
   }
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+
     return () => subscriber();
   }, []);
 
@@ -113,7 +110,6 @@ export function AuthProvider({ children }: PropsWithChildren) {
         user,
         signIn,
         signOut,
-        loading,
       }}
     >
       {children}

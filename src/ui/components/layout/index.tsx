@@ -29,8 +29,6 @@ export default function Layout({ children, footer, header }: LayoutProps) {
     },
   }));
 
-  const navigation = useNavigation();
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -47,10 +45,10 @@ export default function Layout({ children, footer, header }: LayoutProps) {
                 {header.leftIcon === "none" ? null : (
                   <TouchableOpacity>
                     <Entypo
-                      name={header.leftIcon ?? "chevron-left"}
+                      name={header.leftIcon}
                       size={24}
                       color={styles.theme.colors.icon.primary}
-                      onPress={header.onLeftPress ?? navigation.goBack}
+                      onPress={header.onLeftPress}
                     />
                   </TouchableOpacity>
                 )}

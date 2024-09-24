@@ -84,11 +84,11 @@ Not sure if it's the best decision for a chat app, but it's surely fast, provide
 
 I don't think state managers it would be necessary here, since only the auth context data is shared through the app. It would be too much.
 
-### why not styled-components?
+### Why not styled-components?
 
 I like the way `styled-components` brings us closer to web development. It's a great tool, I know everything that i did can be done using it and I have absolutely no problem using it, but recently i started to use this `useStyle` hook approach to deal with styles and i like it better. Also, I read somewhere (not being able to find the source) that it is about 20 to 30% faster than `styled-components`, so.
 
-### strings file?
+### Strings file?
 
 I found that strings files are very useful for mainly 2 things - testing (not having to rewriting strings on tests everytime) and readability.
 

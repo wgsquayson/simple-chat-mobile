@@ -67,7 +67,7 @@ The `hooks` folder has the `useStyle` hook, used to share styles throughout the 
 
 ### utils
 
-General utilites. Formatters like , (to work with strings files, mostly)
+General utilites.
 
 - `format-date.ts` - self explanatory, uses date-fns
 - `place-values.ts` - used to insert values in strings files

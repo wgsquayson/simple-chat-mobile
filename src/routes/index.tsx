@@ -17,9 +17,7 @@ export type StackParamList = {
 const Stack = createNativeStackNavigator<StackParamList>();
 
 function Routes() {
-  const { user, loading } = useAuthContext();
-
-  if (loading) return <FullscreenLoading />;
+  const { user } = useAuthContext();
 
   return (
     <NavigationContainer>

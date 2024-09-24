@@ -37,16 +37,6 @@ Also, some files worth mentioning at the root of the application
 - `eas.json` - some expo eas setup
 - `google-services.json` and `GoogleService-Info.plist`- firebase configuration files
 
-Most of the folders go by the pattern
-
-- domain
-- - subdomain
-- - - `index.tsx` - takes care of business logic, navigation, etc.
-- - - `template.tsx` - takes care of jsx and design
-- - - `model.ts` - types file
-- - - `strings.ts` - self explanatory
-- `index.ts|tsx`- main domain file - usually exports the subdomains.
-
 ### contexts
 
 Contains the `auth` context. The `auth` folder has the following structure

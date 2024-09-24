@@ -14,7 +14,8 @@ This app is, as the name says, a simple chat app. It includes the following set 
 For this project, some tools that are worth a mentioning are:
 
 - [expo](https://expo.dev/) - for building, signing, etc.
-- [@react-native-google-signin/google-signin](https://github.com/react-native-google-signin/google-signin) - Provides methods to sign in with google
+- [typescript](https://www.typescriptlang.org/) - javascript superset
+- [@react-native-google-signin/google-signin](https://github.com/react-native-google-signin/google-signin) - provides methods to sign in with google
 - [@react-native-firebase/app](https://rnfirebase.io/) - facilitates access to various firebase features. On this project, the following packages were used - [auth](https://rnfirebase.io/auth/usage) (for google authentication), [firestore](https://rnfirebase.io/firestore/usage) (for document-based real-time database) and [storage](https://rnfirebase.io/storage/usage) (for images). Worth mentioning that each package is installed separately.
 - [date-fns](https://date-fns.org/) - for dealing with dates
 - [react-native-toast-message](https://github.com/calintamas/react-native-toast-message) - simple toast component used for error messages
@@ -96,7 +97,11 @@ I found that strings files are very useful for mainly 2 things - testing (not ha
 
 - run `yarn` to install dependencies
 - run `yarn prebuild` to generate android and ios folders, and install pods
-- run `yarn ios` or `yarn android` to run the app
-- run `yarn start` if metro bundler does not start
+- run `yarn start` to start metro bundler
+- run `yarn ios` or `yarn android` to build the app
 
 ## Video
+
+The video was too big to upload here, about 2 mins
+
+Uploaded it to Youtube - https://youtu.be/PgyLd5zoeEQ

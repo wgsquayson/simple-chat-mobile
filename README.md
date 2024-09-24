@@ -53,12 +53,12 @@ The app screens are here. Has 3 folders, to each a screen - `sign-in`, `chats` (
 Most folders here go by the pattern, with or without some folder/file
 
 - domain
-- - `index.tsx` - takes care of business logic, navigation, etc.
-- - `template.tsx` - takes care of jsx and design
-- - `model.ts` - types file
-- - `strings.ts` - self explanatory
-- - `components folder` - specific components of the domain
-- - `hooks folder` - specific hooks of the domain
+  - `index.tsx` - takes care of business logic, navigation, etc.
+  - `template.tsx` - takes care of jsx and design
+  - `model.ts` - types file
+  - `strings.ts` - self explanatory
+  - `components folder` - specific components of the domain
+  - `hooks folder` - specific hooks of the domain
 
 ### ui
 
